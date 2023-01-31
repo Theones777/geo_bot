@@ -18,13 +18,11 @@ def get_synthesis_audio(message, marker_id):
     df.loc[df['file_name'] == wav_name, 'status'] = 'coping'
     df.to_csv(SYNTHESYS_CSV_PATH, index=False)
 
-    os.makedirs(os.path.join(TMP_DOWNLOAD_PATH, marker_id), exist_ok=True)
     logging(message, wav_name)
 
-    shutil.copy(os.path.join(SYNTHESIS_DATA_PATH, wav_name), os.path.join(TMP_DOWNLOAD_PATH, marker_id, wav_name))
     df.loc[df['file_name'] == wav_name, 'status'] = 'in_process'
     df.loc[df['file_name'] == wav_name, 'marker_id'] = marker_id
-    audio_path = os.path.join(TMP_DOWNLOAD_PATH, marker_id, wav_name)
+    audio_path = os.path.join(SYNTHESIS_DATA_PATH, wav_name)
     text = df.loc[df['file_name'] == wav_name, 'text'].tolist()[0]
     df.to_csv(SYNTHESYS_CSV_PATH, index=False)
 
